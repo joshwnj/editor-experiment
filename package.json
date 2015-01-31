@@ -4,8 +4,8 @@
   "description": "so i made this new text editor...",
   "main": "index.js",
   "bin": {
-    "edit-select": "bin/range.js",
-    "edit-view": "bin/view-range.js",
+    "edit-select": "bin/select.js",
+    "edit-view": "bin/view.js",
     "edit-delete": "bin/delete.js"
   },
   "dependencies": {

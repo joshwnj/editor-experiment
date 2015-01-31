@@ -1,0 +1,23 @@
+{
+  "name": "editor",
+  "version": "0.0.0",
+  "description": "so i made this new text editor...",
+  "main": "index.js",
+  "bin": {
+    "edit-select": "bin/range.js",
+    "edit-view": "bin/view-range.js",
+    "edit-delete": "bin/delete.js"
+  },
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "is-array": "^1.0.1",
+    "line-offsets": "^1.0.0",
+    "minimist": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "joshwnj",
+  "license": "MIT"
+}

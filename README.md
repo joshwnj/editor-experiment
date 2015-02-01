@@ -1,38 +1,30 @@
+editor-experiment
+====
+
+Seeing where this goes...
+
 examples
 ----
 
 ~~~
-j5 wl3 x
+edit-select helloworld.txt 2 /i/ e . : /t/ e .4 --context
 ~~~
 
-- select the line, 5 lines down
-- select the word, 3 words forward
-- delete the selection
+Breaking it down:
 
-~~~
-/w i
-to the
-~~~
+- open `helloworld.txt`
+- `2`: place the cursor at the beginning of line 2
+- `/i/`: move the cursor forward to the next regex match (in this case, the next `i` character)
+- `e`: modify the previous command so that the cursor is placed at the end of the match, rather than the start (in this, immediately after the `i`)
+- `.`: repeat the previous command (so now the cursor is placed at the end of the second `i`)
+- `:`: record the current cursor position. Subsequent commands will continue from this point so that we can select a range.
+- `/t/`: regex match, same as before (but this time looking for the next `t` character)
+- `e`: same as before, place the cursor at the end of the match
+- `.4`: same as before, repeat the previous command. But this time repeat it 4 times (so we will place the cursor at the end of the fifth `t`)
 
-- search forward for the next `w`
-- insert text `to the`
+The final flag `--context` allows us to see the selected portion of the file. Omitting this flag means we only see the selection range offsets (eg. `18 46`). We could use this information to edit the file (eg. `edit-delete helloworld.txt 18 46`)
 
-command format
+the future
 ----
 
-- selection: `[unit][direction][amount]`
-
--------------------------------------------------------------------------------
-
-- what if we wanted to search for the 3rd space from point? can't do `/ 3` because there's no way to separate the multiplier from the search pattern.
-- could do `3/ ` instead
-- or could do `/[ ]3` with the understanding that the search pattern is always wrapped in brackets.
-- or could do `/ ` followed by `.3` (with `.` as "repeat last command")
-
--------------------------------------------------------------------------------
-
-- abstraction: operate on source by running a sequence of functions
-- at any point we can see the modified state of the source, and the current selection range
-- `selectLine(3)`
-- `selectWord(2)`
-- `delete()`
+That example is maybe not very compelling. The next step is to create a UI that allows us to compose this style of editing operations, while interactively seeing the results. The entire operation can be tweaked and corrected, and doesn't result in any changes to the source file until it is finally applied.

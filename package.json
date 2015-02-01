@@ -12,6 +12,7 @@
     "chalk": "^0.5.1",
     "is-array": "^1.0.1",
     "line-offsets": "^1.0.0",
+    "linemap": "^1.0.0",
     "minimist": "^1.1.0"
   },
   "devDependencies": {

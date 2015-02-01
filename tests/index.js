@@ -6,7 +6,7 @@ tape('Make a selection', function (t) {
 
   var selectCmd = __dirname + '/../bin/select.js';
   var sourceFile = __dirname + '/helloworld.txt';
-  var cmd = selectCmd + ' ' + sourceFile + ' 2 /i/ e . \\\\ /t/ e \.4';
+  var cmd = selectCmd + ' ' + sourceFile + ' 2 /i/ e . : /t/ e .4';
   exec(cmd, function (err, stdout, stderr) {
     if (err) { throw err; }
     if (stderr) { throw stderr; }

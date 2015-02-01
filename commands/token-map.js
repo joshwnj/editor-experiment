@@ -6,6 +6,11 @@ var tokenMap = [
   },
 
   {
+    pattern: ':',
+    constructor: SetMark
+  },
+
+  {
     pattern: 'e',
     constructor: EndOfPrevious
   },
@@ -29,9 +34,10 @@ function GotoLine (token) {
 
 GotoLine.prototype.run = function (editor, cursor) {
   var lineMap = editor.getLineMap();
-  return (this.selectEnd) ?
-    lineMap.getOffsetForLine(this.line + 1) - 1 :
-    lineMap.getOffsetForLine(this.line);
+  return [
+    lineMap.getOffsetForLine(this.line),
+    lineMap.getOffsetForLine(this.line + 1) - 1
+  ];
 };
 
 // select the start of a regexp match
@@ -48,10 +54,25 @@ Search.prototype.run = function (editor, cursor) {
   if (!match) { return cursor; }
 
   var index = match.index;
-  if (this.selectEnd) { index += match[0].length; }
 
-  return cursor + index;
+  return [
+    cursor + index,
+    cursor + index + match[0].length
+  ];
 };
+
+// set a mark
+function SetMark (token) {
+  this.token = token;
+}
+
+SetMark.prototype.run = function (editor, cursor) {
+  editor.setMark(cursor);
+
+  // handle end-selection by selecting the end of the last command
+  return editor.getLastCommandRange();
+};
+
 
 // select the end of the previous match
 function EndOfPrevious (token) {

@@ -35,10 +35,10 @@ function GotoLine (token) {
 
 GotoLine.prototype.run = function (editor, cursor) {
   var lineMap = editor.getLineMap();
-  return [
+  editor.moveToTextObject(
     lineMap.getOffsetForLine(this.line),
     lineMap.getOffsetForLine(this.line + 1) - 1
-  ];
+  );
 };
 
 // select the start of a regexp match
@@ -52,14 +52,11 @@ function Search (token) {
 Search.prototype.run = function (editor, cursor) {
   var factor = this.factor || 1;
   var source = editor.getSource();
-  var match = nthMatch(source.substr(cursor), this.pattern, this.factor-1);
+  var match = nthMatch(source.substr(cursor), this.pattern, factor-1);
 
   cursor += match.index;
 
-  return [
-    cursor,
-    cursor + match[0].length
-  ];
+  editor.moveToTextObject(cursor, cursor + match[0].length);
 };
 
 // set a mark
@@ -69,11 +66,7 @@ function SetMark (token) {
 
 SetMark.prototype.run = function (editor, cursor) {
   editor.setMark(cursor);
-
-  // handle end-selection by selecting the end of the last command
-  return editor.getLastCommandRange();
 };
-
 
 // select the end of the previous match
 function EndOfPrevious (token) {

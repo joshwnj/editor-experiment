@@ -1,3 +1,4 @@
+var nthMatch = require('nth-match');
 var intRegexp = /^[0-9]+$/;
 var tokenMap = [
   {
@@ -22,11 +23,11 @@ var tokenMap = [
 
   {
     pattern: /^\./,
-    constructor: Repeat
+    constructor: SetFactor
   }
 ];
 
-// select the start of a line
+// select a line
 function GotoLine (token) {
   this.token = token;
   this.line = parseInt(token, 10);
@@ -49,15 +50,15 @@ function Search (token) {
 }
 
 Search.prototype.run = function (editor, cursor) {
+  var factor = this.factor || 1;
   var source = editor.getSource();
-  var match = this.pattern.exec(source.substr(cursor));
-  if (!match) { return cursor; }
+  var match = nthMatch(source.substr(cursor), this.pattern, this.factor-1);
 
-  var index = match.index;
+  cursor += match.index;
 
   return [
-    cursor + index,
-    cursor + index + match[0].length
+    cursor,
+    cursor + match[0].length
   ];
 };
 
@@ -83,20 +84,21 @@ EndOfPrevious.prototype.modifyCommand = function (cmd) {
   cmd.selectEnd = true;
 };
 
-// repeat the previous command
-function Repeat (token) {
+// set the factor for the previous command
+function SetFactor (token) {
   this.isModifier = true;
   this.token = token;
 
-  this.times = 1;
+  // if there's no number given, treat as a factor of 2
+  this.factor = 2;
   if (token.length > 1) {
-    this.times = parseInt(token.substr(1), 10);
+    this.factor = parseInt(token.substr(1), 10);
   }
 }
 
-Repeat.prototype.modifyCommand = function (command) {
-  if (!command.times) { command.times = 1; }
-  command.times += this.times;
+SetFactor.prototype.modifyCommand = function (command) {
+  if (!command.factor) { command.factor = 1; }
+  command.factor = this.factor;
 };
 
 module.exports = tokenMap;

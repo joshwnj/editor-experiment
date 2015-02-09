@@ -7,7 +7,7 @@ examples
 ----
 
 ~~~
-edit-select helloworld.txt 2 /i/ e . : /t/ e .4 --context
+edit-select helloworld.txt 2 /i/ e . : /t/ e .5 --context
 ~~~
 
 Breaking it down:
@@ -20,7 +20,7 @@ Breaking it down:
 - `:`: record the current cursor position. Subsequent commands will continue from this point so that we can select a range.
 - `/t/`: regex match, same as before (but this time looking for the next `t` character)
 - `e`: same as before, place the cursor at the end of the match
-- `.4`: same as before, repeat the previous command. But this time repeat it 4 times (so we will place the cursor at the end of the fifth `t`)
+- `.5`: same as before, repeat the previous command. But this time give it a factor of 5 (so we will place the cursor at the end of the fifth `t`)
 
 The final flag `--context` allows us to see the selected portion of the file. Omitting this flag means we only see the selection range offsets (eg. `18 46`). We could use this information to edit the file (eg. `edit-delete helloworld.txt 18 46`)
 

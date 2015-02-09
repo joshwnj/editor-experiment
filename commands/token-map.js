@@ -24,6 +24,17 @@ var tokenMap = [
   {
     pattern: /^\./,
     constructor: SetFactor
+  },
+
+  // replacement commands
+  {
+    pattern: 'x',
+    constructor: Delete
+  },
+
+  {
+    pattern: 'U',
+    constructor: Uppercase
   }
 ];
 
@@ -93,5 +104,25 @@ SetFactor.prototype.modifyCommand = function (command) {
   if (!command.factor) { command.factor = 1; }
   command.factor = this.factor;
 };
+
+// delete the current region
+function Delete (token) {
+  this.token = token;
+}
+
+Delete.prototype.run = function (editor, cursor) {
+  editor.replaceRegion('');
+};
+
+// uppercase the current region
+function Uppercase (token) {
+  this.token = token;
+}
+
+Uppercase.prototype.run = function (editor, cursor) {
+  var text = editor.getRegionText();
+  editor.replaceRegion(text.toUpperCase());
+};
+
 
 module.exports = tokenMap;

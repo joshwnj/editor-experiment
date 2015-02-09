@@ -20,6 +20,7 @@ var editor = new Editor(source);
 
 editor.addCommands(compileTokens(argv._));
 var range = editor.getRangeOffsets();
+source = editor.getSource();
 
 // display the range text in context, with colors
 if (displayContext) {
@@ -59,7 +60,7 @@ if (displayContext) {
 }
 // display the range text
 else if (displayText) {
-  process.stdout.write(source.substring.apply(source, range) + '\n');
+  process.stdout.write(editor.getRegionText() + '\n');
 }
 // display the range offset values (default)
 else {

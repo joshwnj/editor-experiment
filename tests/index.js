@@ -4,9 +4,9 @@ var exec = require('child_process').exec;
 tape('Make a selection', function (t) {
   t.plan(1);
 
-  var selectCmd = __dirname + '/../bin/select.js';
+  var editCmd = __dirname + '/../bin/edit.js';
   var sourceFile = __dirname + '/helloworld.txt';
-  var cmd = selectCmd + ' ' + sourceFile + ' 2 /i/ e . : /t/ e .5';
+  var cmd = editCmd + ' ' + sourceFile + ' 2 /i/ e . : /t/ e .5';
   exec(cmd, function (err, stdout, stderr) {
     if (err) { throw err; }
     if (stderr) { throw stderr; }
@@ -18,9 +18,9 @@ tape('Make a selection', function (t) {
 tape('Select a whole line', function (t) {
   t.plan(1);
 
-  var selectCmd = __dirname + '/../bin/select.js';
+  var editCmd = __dirname + '/../bin/edit.js';
   var sourceFile = __dirname + '/helloworld.txt';
-  var cmd = selectCmd + ' ' + sourceFile + ' 2 : e';
+  var cmd = editCmd + ' ' + sourceFile + ' 2 : e';
   exec(cmd, function (err, stdout, stderr) {
     if (err) { throw err; }
     if (stderr) { throw stderr; }

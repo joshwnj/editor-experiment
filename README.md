@@ -7,7 +7,7 @@ examples
 ----
 
 ~~~
-edit-select helloworld.txt 2 /i/ e . : /t/ e .5 --context
+cooltext helloworld.txt 2 /i/ e . : /t/ e .5 --context
 ~~~
 
 Breaking it down:
@@ -22,7 +22,15 @@ Breaking it down:
 - `e`: same as before, place the cursor at the end of the match
 - `.5`: same as before, repeat the previous command. But this time give it a factor of 5 (so we will place the cursor at the end of the fifth `t`)
 
-The final flag `--context` allows us to see the selected portion of the file. Omitting this flag means we only see the selection range offsets (eg. `18 46`). We could use this information to edit the file (eg. `edit-delete helloworld.txt 18 46`)
+The final flag `--context` allows us to see the selected portion of the file. Omitting this flag means we only see the selection range offsets (eg. `18 46`).
+
+
+We can also delete the text in a selected range with the `x` command:
+
+~~~
+cooltext helloworld.txt 2 : 4 '/\ \b/' e x --context
+~~~
+
 
 the future
 ----

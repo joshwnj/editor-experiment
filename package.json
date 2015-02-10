@@ -4,9 +4,7 @@
   "description": "so i made this new text editor...",
   "main": "index.js",
   "bin": {
-    "edit-select": "bin/select.js",
-    "edit-view": "bin/view.js",
-    "edit-delete": "bin/delete.js"
+    "cooltext": "bin/edit.js"
   },
   "dependencies": {
     "chalk": "^0.5.1",

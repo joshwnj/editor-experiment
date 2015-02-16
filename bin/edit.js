@@ -19,6 +19,8 @@ var source = fs.readFileSync(sourceFilename, 'utf8');
 var editor = new Editor(source);
 
 editor.addCommands(compileTokens(argv._));
+editor.run();
+
 var range = editor.getRangeOffsets();
 source = editor.getSource();
 
@@ -28,7 +30,7 @@ if (displayContext) {
 
   process.stdout.write('(' + range.join(' ') + ')\n');
 
-  var numSurroundingLines = 2;
+  var numSurroundingLines = 3;
   var view = new TextView(source);
   var lineMap = editor.getLineMap();
   view.narrow(

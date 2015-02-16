@@ -35,6 +35,11 @@ var tokenMap = [
   {
     pattern: 'U',
     constructor: Uppercase
+  },
+
+  {
+    pattern: /r\n([\s\S]+)\n\./,
+    constructor: ReplaceWithText
   }
 ];
 
@@ -124,5 +129,14 @@ Uppercase.prototype.run = function (editor, cursor) {
   editor.replaceRegion(text.toUpperCase());
 };
 
+// replace the current region with input
+function ReplaceWithText (token, matches) {
+  this.token = token;
+  this.text = matches[1];
+}
+
+ReplaceWithText.prototype.run = function (editor, cursor) {
+  editor.replaceRegion(this.text);
+};
 
 module.exports = tokenMap;

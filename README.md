@@ -3,7 +3,7 @@ editor-experiment
 
 Seeing where this goes...
 
-examples
+example: making a selection
 ----
 
 ~~~
@@ -25,11 +25,36 @@ Breaking it down:
 The final flag `--context` allows us to see the selected portion of the file. Omitting this flag means we only see the selection range offsets (eg. `18 46`).
 
 
-We can also delete the text in a selected range with the `x` command:
+example: replacing and deleting
+----
+
+Or we can replace text in a range:
 
 ~~~
-cooltext helloworld.txt 2 : 4 '/\ \b/' e x --context
+cooltext helloworld.txt 2 : e "r
+it's
+." : /test\ / : e x  --context
 ~~~
+
+This reads as:
+
+- replace all of line 2 with the word `it's`.
+- delete the next occurrence of the word `test `.
+
+Shows the output:
+
+~~~
+(19 19)
+hello world
+it's
+a ||file
+that i am
+editing.
+~~~
+
+- `(19 19)` is the final character offset of the _mark_ (where the selection started) and the _point_ (where the cursor currently is).
+- Point and mark are also displayed as red and blue pipes (`|`) in the `--context` output.
+
 
 
 the future
